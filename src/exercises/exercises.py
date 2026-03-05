@@ -9,8 +9,8 @@ from typing import Optional
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import func
 
-from src.demo.flask_orm.extensions import db
-from src.demo.flask_orm.models import Student, Grade, Assignment
+from src.exercises.extensions import db
+from src.exercises.models import Student, Grade, Assignment
 
 
 # ===== BASIC CRUD =====

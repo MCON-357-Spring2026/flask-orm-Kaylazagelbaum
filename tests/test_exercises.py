@@ -1,8 +1,8 @@
 import pytest
 
-from src.demo.flask_orm.app import create_app
-from src.demo.flask_orm.extensions import db
-from src.demo.flask_orm.models import Assignment, Student, Grade
+from src.exercises.app import create_app
+from src.exercises.extensions import db
+from src.exercises.models import Assignment, Student, Grade
 from src.exercises import exercises as ex
 
 
