@@ -243,32 +243,33 @@ def students_with_average_above(threshold: float) -> list[Student]:
            .all())
 
 
-def assignments_without_grades() -> list[Assignment]:
-    """TODO: Return assignments that have no grades yet, ordered by title."""
-    assignments = Assignment.query.order_by(Assignment.title).all()
-    empty = []
-    for assignment in assignments:
-        if len(assignment.grades) == 0:
-            empty.append(assignment)
-    return empty
+def assignments_without_grades() -> list[Assignment]:     
+    """TODO: Return assignments that have no grades yet, ordered by title."""     
+    return(         
+           db.session.query(Assignment)         
+           .outerjoin(Grade)         
+           .filter(Grade.id.is_(None))         
+           .order_by(Assignment.title)         
+           .all())
 
 
-def top_scorer_on_assignment(assignment_id: int) -> Optional[Student]:
-    """TODO: Return the Student with the highest score on an assignment.
 
-    If assignment doesn't exist: raise LookupError
-    If no grades on assignment: return None
-    If tie (multiple students with same high score): return any one
-    """
-    assignment = db.session.get(Assignment, assignment_id)
-    if not assignment:
-        raise LookupError
-    if len(assignment.grades) == 0:
-        return None
+def top_scorer_on_assignment(assignment_id: int) -> Optional[Student]:    
+    """TODO: Return the Student with the highest score on an assignment.      
+    If assignment doesn't exist: raise LookupError     
+    If no grades on assignment: return None     
+    If tie (multiple students with same high score): return any one     
+    """     
+    assignment = db.session.get(Assignment, assignment_id)     
+    if not assignment:         
+        raise LookupError    
 
-    maximum = 0
-    for grade in assignment.grades:
-        if grade.score > maximum:
-            maximum = grade
-    return maximum.student
+    top_grade = (         
+    Grade.query.filter_by(assignment_id=assignment_id)         
+    .order_by(Grade.score.desc())         
+    .first()     
+    )      
+    
+    return top_grade.student if top_grade else None
+
 
