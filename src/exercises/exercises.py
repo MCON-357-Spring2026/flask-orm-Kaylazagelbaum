@@ -243,7 +243,7 @@ def students_with_average_above(threshold: float) -> list[Student]:
            .all())
 
 
-def assignments_without_grades() -> list[Assignment]:     
+def assignments_without_grades() -> list[Assignment]:
     """TODO: Return assignments that have no grades yet, ordered by title."""     
     return(         
            db.session.query(Assignment)         
